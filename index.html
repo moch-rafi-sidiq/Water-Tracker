@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tetes adalah pencatat konsumsi air harian yang sederhana. Catat minum, pantau progres, dan lihat kebiasaan hidrasi Anda.">
+  <meta name="theme-color" content="#F6F9FC">
+  <title>Tetes — Water Tracker</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23EAF4FF'/%3E%3Cpath d='M32 12c-1 5-4 9-8 13-4 4-6 8-6 13a14 14 0 0 0 28 0c0-5-2-9-6-13-4-4-7-8-8-13Z' fill='%232878D0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Lewati ke konten utama</a>
+
+  <!-- Lucide icon paths inlined as an SVG sprite so the interface also works offline. -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-droplet" viewBox="0 0 24 24">
+      <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 3c-.5 2.5-2 4.9-4 6.5S5 13 5 15a7 7 0 0 0 7 7Z"/>
+    </symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24">
+      <path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3"/>
+      <path d="M14 2v4M8 10v4M16 18v4"/>
+    </symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24">
+      <rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+    </symbol>
+    <symbol id="i-target" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+    <symbol id="i-glass" viewBox="0 0 24 24">
+      <path d="M15.2 22H8.8a2 2 0 0 1-2-1.79L5 3h14l-1.8 17.21A2 2 0 0 1 15.2 22Z"/>
+      <path d="M6 12a5 5 0 0 1 6 0 5 5 0 0 0 6 0"/>
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24">
+      <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/>
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24">
+      <path d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+      <path d="M10 11v6M14 11v6"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24">
+      <ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/>
+      <path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>
+    </symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 16v-5M12 16V7M17 16v-3"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.7 1.9 18a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Tetes, muat ulang halaman utama">
+        <span class="brand-mark" aria-hidden="true"><svg><use href="#i-droplet"></use></svg></span>
+        <span class="brand-copy">
+          <strong>Tetes</strong>
+          <span>Pelacak minum air</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <div class="header-date">
+          <svg aria-hidden="true"><use href="#i-calendar"></use></svg>
+          <div>
+            <span class="date-label">Hari ini</span>
+            <time id="currentDate">Memuat tanggal</time>
+          </div>
+        </div>
+        <button class="icon-button" id="openSettingsButton" type="button" aria-label="Buka pengaturan">
+          <svg aria-hidden="true"><use href="#i-settings"></use></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-main" id="main">
+      <section class="progress-card" aria-labelledby="heroTitle">
+        <div class="progress-copy">
+          <p class="eyebrow"><span aria-hidden="true"></span> Progres hari ini</p>
+          <h1 id="heroTitle">Tetap terhidrasi hari ini.</h1>
+          <p class="hero-subtitle">Sedikit demi sedikit, jaga kebiasaan minum air.</p>
+
+          <div class="hero-metrics">
+            <p class="hero-total">
+              <span id="todayTotal">0</span>
+              <span class="hero-unit">ml</span>
+            </p>
+            <button class="target-button" id="targetButton" type="button" aria-label="Ubah target harian">
+              <svg aria-hidden="true"><use href="#i-target"></use></svg>
+              <span>Target <strong id="targetValue">2.000 ml</strong></span>
+              <svg class="target-edit-icon" aria-hidden="true"><use href="#i-settings"></use></svg>
+            </button>
+          </div>
+
+          <p class="hero-status" id="heroStatus">
+            <span class="status-icon" aria-hidden="true"><svg><use href="#i-droplet"></use></svg></span>
+            <span id="heroStatusText">Sisa 2.000 ml menuju target hari ini.</span>
+          </p>
+        </div>
+
+        <div class="progress-stage">
+          <div class="progress-ring" id="progressRing" role="progressbar" aria-label="Progres konsumsi air hari ini" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0 persen dari target harian">
+            <svg class="ring-svg" viewBox="0 0 240 240" aria-hidden="true">
+              <circle class="ring-track" cx="120" cy="120" r="104"></circle>
+              <circle class="ring-progress" id="ringProgress" cx="120" cy="120" r="104" pathLength="100"></circle>
+            </svg>
+            <div class="ring-content">
+              <span class="ring-percent"><span id="percentValue">0</span><span class="percent-mark">%</span></span>
+              <span class="ring-caption">dari target harian</span>
+            </div>
+          </div>
+          <p class="ring-footnote" id="ringFootnote">0 ml dari 2.000 ml</p>
+        </div>
+      </section>
+
+      <div class="primary-grid">
+        <section class="card add-card" id="addSection" aria-labelledby="addTitle">
+          <div class="card-heading">
+            <div>
+              <h2 id="addTitle">Tambah Air</h2>
+              <p>Pilih jumlah yang baru saja Anda minum.</p>
+            </div>
+            <span class="heading-icon" aria-hidden="true"><svg><use href="#i-plus"></use></svg></span>
+          </div>
+
+          <div class="quick-add-grid" role="group" aria-label="Pilihan cepat jumlah air">
+            <button class="quick-add" type="button" data-amount="150">
+              <span class="quick-icon" aria-hidden="true"><svg><use href="#i-glass"></use></svg></span>
+              <span class="quick-copy"><strong>+150 ml</strong><small>Segelas kecil</small></span>
+            </button>
+            <button class="quick-add" type="button" data-amount="250">
+              <span class="quick-icon" aria-hidden="true"><svg><use href="#i-glass"></use></svg></span>
+              <span class="quick-copy"><strong>+250 ml</strong><small>Satu gelas</small></span>
+            </button>
+            <button class="quick-add" type="button" data-amount="350">
+              <span class="quick-icon" aria-hidden="true"><svg><use href="#i-glass"></use></svg></span>
+              <span class="quick-copy"><strong>+350 ml</strong><small>Gelas besar</small></span>
+            </button>
+            <button class="quick-add" type="button" data-amount="500">
+              <span class="quick-icon" aria-hidden="true"><svg><use href="#i-glass"></use></svg></span>
+              <span class="quick-copy"><strong>+500 ml</strong><small>Satu botol</small></span>
+            </button>
+          </div>
+
+          <div class="form-divider"><span>Atau masukkan jumlah lain</span></div>
+
+          <form class="custom-form" id="customForm" novalidate>
+            <label for="customAmount">Jumlah air</label>
+            <div class="custom-fields">
+              <div class="input-group">
+                <input id="customAmount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="Contoh: 250" aria-describedby="customHint customError">
+                <select id="customUnit" aria-label="Satuan jumlah air">
+                  <option value="ml">ml</option>
+                  <option value="l">liter</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" id="customSubmit" type="submit">
+                <svg aria-hidden="true"><use href="#i-plus"></use></svg>
+                <span>Tambah</span>
+              </button>
+            </div>
+            <div class="form-footer">
+              <span class="field-hint" id="customHint">Masukkan angka lebih dari 0.</span>
+              <span class="field-error" id="customError" role="alert"></span>
+            </div>
+          </form>
+        </section>
+
+        <section class="card history-card" aria-labelledby="historyTitle">
+          <div class="card-heading">
+            <div>
+              <div class="heading-with-count">
+                <h2 id="historyTitle">Riwayat Hari Ini</h2>
+                <span class="count-badge" id="historyCount" aria-label="0 catatan">0</span>
+              </div>
+              <p>Catatan terbaru muncul di urutan teratas.</p>
+            </div>
+            <span class="heading-icon" aria-hidden="true"><svg><use href="#i-history"></use></svg></span>
+          </div>
+
+          <ul class="history-list" id="historyList" role="list" aria-label="Catatan minum hari ini"></ul>
+
+          <div class="empty-state" id="historyEmpty">
+            <span class="empty-icon" aria-hidden="true"><svg><use href="#i-droplet"></use></svg></span>
+            <h3>Belum ada catatan</h3>
+            <p>Mulai dari satu gelas. Catatan pertama Anda akan muncul di sini.</p>
+            <button class="btn btn-secondary btn-small" id="emptyAddButton" type="button">
+              <svg aria-hidden="true"><use href="#i-plus"></use></svg>
+              <span>Catat minum pertama</span>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <section class="card summary-card" aria-labelledby="summaryTitle">
+        <div class="summary-heading">
+          <div>
+            <h2 id="summaryTitle">Ringkasan Konsumsi</h2>
+            <p>Gambaran singkat dari catatan minum Anda.</p>
+          </div>
+          <div class="week-nav" role="group" aria-label="Navigasi periode grafik">
+            <button class="icon-button icon-button-small" id="prevWeekButton" type="button" aria-label="Tampilkan tujuh hari sebelumnya">
+              <svg aria-hidden="true"><use href="#i-chevron-left"></use></svg>
+            </button>
+            <span class="week-label" id="weekLabel">7 hari terakhir</span>
+            <button class="icon-button icon-button-small" id="nextWeekButton" type="button" aria-label="Tampilkan tujuh hari berikutnya" disabled>
+              <svg aria-hidden="true"><use href="#i-chevron-right"></use></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="summary-stats">
+          <div class="summary-stat">
+            <span class="stat-label">Hari ini</span>
+            <p class="stat-value"><span id="summaryToday">0</span> <small>ml</small></p>
+            <span class="stat-meta" id="summaryTodayMeta">Belum ada catatan</span>
+          </div>
+          <div class="summary-stat">
+            <span class="stat-label">Sesi minum</span>
+            <p class="stat-value"><span id="summarySessions">0</span> <small>kali</small></p>
+            <span class="stat-meta">Dicatat hari ini</span>
+          </div>
+          <div class="summary-stat">
+            <span class="stat-label">Rata-rata harian</span>
+            <p class="stat-value"><span id="summaryAverage">—</span> <small>ml</small></p>
+            <span class="stat-meta" id="summaryAverageMeta">Dari hari berisi catatan</span>
+          </div>
+        </div>
+
+        <div class="chart-block">
+          <div class="chart-heading">
+            <div>
+              <h3>Konsumsi tujuh hari</h3>
+              <p>Angka dalam mililiter (ml).</p>
+            </div>
+            <span class="chart-key"><span aria-hidden="true"></span> Total harian</span>
+          </div>
+          <div class="week-chart" id="weeklyChart" role="group" aria-label="Grafik konsumsi air tujuh hari"></div>
+          <p class="chart-detail" id="chartDetail" aria-live="polite">Arahkan kursor atau ketuk batang untuk melihat detail harian.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p><svg aria-hidden="true"><use href="#i-lock"></use></svg> Data tersimpan di perangkat ini.</p>
+      <p>Tetes <span aria-hidden="true">·</span> <span id="footerYear">2026</span></p>
+    </footer>
+  </div>
+
+  <dialog class="modal" id="settingsDialog" aria-labelledby="settingsTitle">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <div>
+          <p class="modal-eyebrow">Preferensi</p>
+          <h2 id="settingsTitle">Pengaturan</h2>
+        </div>
+        <button class="icon-button" id="closeSettingsButton" type="button" aria-label="Tutup pengaturan">
+          <svg aria-hidden="true"><use href="#i-x"></use></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <section class="settings-section" aria-labelledby="targetSettingsTitle">
+          <div class="settings-heading">
+            <h3 id="targetSettingsTitle">Target harian</h3>
+            <span class="soft-badge">Dapat diubah</span>
+          </div>
+          <form id="targetForm" novalidate>
+            <label for="targetAmount">Jumlah target</label>
+            <div class="target-fields">
+              <div class="input-group">
+                <input id="targetAmount" name="target" type="text" inputmode="decimal" autocomplete="off" aria-describedby="targetHelp targetError">
+                <span class="input-suffix" id="targetSuffix">ml</span>
+              </div>
+              <fieldset class="segmented-control">
+                <legend class="sr-only">Satuan target</legend>
+                <label>
+                  <input type="radio" name="targetUnit" value="ml" checked>
+                  <span>ml</span>
+                </label>
+                <label>
+                  <input type="radio" name="targetUnit" value="l">
+                  <span>liter</span>
+                </label>
+              </fieldset>
+            </div>
+            <p class="field-hint" id="targetHelp">Contoh: 2.000 ml atau 2 liter.</p>
+            <p class="field-error" id="targetError" role="alert"></p>
+            <div class="settings-action-row">
+              <button class="btn btn-primary" type="submit">Simpan target</button>
+            </div>
+          </form>
+          <div class="info-note">
+            <svg aria-hidden="true"><use href="#i-info"></use></svg>
+            <p>Kebutuhan air setiap orang dapat berbeda. Nilai awal 2.000 ml hanyalah titik mulai, bukan rekomendasi medis. Sesuaikan dengan kebutuhan dan aktivitas Anda.</p>
+          </div>
+        </section>
+
+        <section class="settings-section" aria-labelledby="storageTitle">
+          <h3 id="storageTitle">Penyimpanan data</h3>
+          <div class="storage-note">
+            <span class="storage-icon" aria-hidden="true"><svg><use href="#i-database"></use></svg></span>
+            <div>
+              <strong>Hanya di perangkat ini</strong>
+              <p>Data disimpan di LocalStorage browser pada perangkat ini. Data tidak otomatis tersinkronisasi ke perangkat lain.</p>
+            </div>
+          </div>
+          <p class="storage-meta" id="storageMeta">Belum ada catatan tersimpan.</p>
+        </section>
+
+        <section class="settings-section danger-section" aria-labelledby="dataManagementTitle">
+          <h3 id="dataManagementTitle">Kelola data</h3>
+          <p class="danger-copy">Tindakan berikut tidak dapat dibatalkan. Pilih dengan hati-hati.</p>
+          <div class="reset-actions">
+            <button class="btn btn-outline-danger" id="resetHistoryButton" type="button">
+              <svg aria-hidden="true"><use href="#i-undo"></use></svg>
+              <span>Hapus riwayat minum</span>
+            </button>
+            <button class="btn btn-danger-ghost" id="resetAllButton" type="button">
+              <svg aria-hidden="true"><use href="#i-trash"></use></svg>
+              <span>Reset semua data</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="modal confirm-modal" id="confirmDialog" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+    <div class="modal-panel confirm-panel">
+      <span class="confirm-icon" aria-hidden="true"><svg><use href="#i-alert"></use></svg></span>
+      <h2 id="confirmTitle">Konfirmasi tindakan</h2>
+      <p id="confirmMessage">Apakah Anda yakin?</p>
+      <div class="confirm-actions">
+        <button class="btn btn-secondary" id="confirmCancelButton" type="button">Batal</button>
+        <button class="btn btn-danger" id="confirmActionButton" type="button">Hapus</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <noscript><p class="noscript-message">Tetes membutuhkan JavaScript agar pencatatan air dapat berfungsi. Aktifkan JavaScript di browser Anda.</p></noscript>
+</body>
+</html>
